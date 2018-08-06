@@ -27,7 +27,8 @@
                               </v-text-field>
                             </v-flex>
                           </v-layout>
-                             <p class="text-lg-right">Login</p>
+                              <a href="#" class="black--text"><p class="text-lg-right">Login</p></a>
+                             
                                 <v-layout row>
                                
                                 <v-flex xs 12>

@@ -11,9 +11,13 @@ export default new Vuex.Store({
     state:{
         name :'',
         email :'',
-        password :''
+        password :'',
+        dialog : false
     },
     mutations :{
+        setDialog(state,payload){
+            state.dialog = payload
+        },
         setName(state,payload){
             state.name=payload
         },
@@ -63,6 +67,9 @@ export default new Vuex.Store({
             .catch(err=>{
                 console.log(err)
             })
+        },
+        openModal({commit}){
+            commit('setDialog',true)
         }
     }
 })

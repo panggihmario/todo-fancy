@@ -14,7 +14,11 @@
                         <td>Alvin</td>
                         <td>Eclair</td>
                         <td>$0.87</td>
-                        <td>$0.87</td>
+                        <td>
+                            edit || 
+                            delete
+
+                        </td>
                     </tr>
        
        

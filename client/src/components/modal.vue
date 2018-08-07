@@ -4,46 +4,31 @@
        
         <v-card>
           <v-card-title>
-            <span class="headline">User Profile</span>
+            <span class="headline">Add Task</span>
           </v-card-title>
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field label="Legal first name" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field
-                    label="Legal last name"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                    required
-                  ></v-text-field>
+                <v-flex xs12>
+                  <v-text-field label="Task" required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field label="Email" required></v-text-field>
+                   <div>
+      <v-layout row wrap>
+        <v-flex xs12 sm3>
+          <v-checkbox v-model="landscape" hide-details label="Landscape"></v-checkbox>
+        </v-flex>
+        <v-flex xs12 sm3>
+          <v-checkbox v-model="reactive" hide-details label="Reactive"></v-checkbox>
+        </v-flex>
+      </v-layout>
+  
+      <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
+    </div>
+                  
                 </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Password" type="password" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select
-                    :items="['0-17', '18-29', '30-54', '54+']"
-                    label="Age"
-                    required
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-autocomplete
-                    :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                    label="Interests"
-                    multiple
-                    chips
-                  ></v-autocomplete>
-                </v-flex>
+              
+              
               </v-layout>
             </v-container>
             <small>*indicates required field</small>
@@ -69,6 +54,13 @@ export default {
             set(value){
                 this.$store.commit('setDialog',false)
             }
+        }
+    },
+    data(){
+        return {
+        picker: null,
+        landscape: false,
+        reactive: false
         }
     }
 }

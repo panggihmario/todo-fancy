@@ -6,6 +6,7 @@
             <modal/>
             <v-container style="margin-top:100px">
                 <listTask/>
+                <modalEdit/>
             </v-container>
             </v-jumbotron>
         </v-app>
@@ -16,9 +17,10 @@
 import navbar from '@/components/navbar.vue'
 import listTask from '@/components/listTask.vue'
 import modal from '@/components/modal.vue'
+import modalEdit from '@/components/modalEdit.vue'
 export default {
     components : {
-        navbar,listTask,modal
+        navbar,listTask,modal,modalEdit
     },
     data(){
         return{

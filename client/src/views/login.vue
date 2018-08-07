@@ -10,11 +10,7 @@
                     <v-container >
                         <form>
                             <v-layout row>
-                            <v-flex xs12>
-                              <v-text-field name ="email" label="name" v-model="inputName" type="name">
-                                
-                              </v-text-field>
-                            </v-flex>
+                        
                           </v-layout>
                           <v-layout row>
                             <v-flex xs12>
@@ -28,13 +24,13 @@
                               </v-text-field>
                             </v-flex>
                           </v-layout>
-                              <a href="#" class="black--text" @click="moveToLogin"><p class="text-lg-right">Login</p></a>
+                              <a href="#" class="black--text" @click="moveToRegister"><p class="text-lg-right">Register</p></a>
                              
                                 <v-layout row>
                                
                                 <v-flex xs 12>
                                     <div>
-                                   <v-btn outline color="indigo">Register</v-btn>
+                                   <v-btn outline color="indigo">Login</v-btn>
                                 </div>
                                 
                                   </v-flex>
@@ -58,9 +54,9 @@ export default {
     }
   },
   methods : {
-    moveToLogin(){
-      router.push('/login')
-    }
+      moveToRegister(){
+          router.push('/')
+      }
   }
 }
 </script>

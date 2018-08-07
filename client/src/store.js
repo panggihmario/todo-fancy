@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import swal from 'sweetalert';
+
 const axios = require('axios');
 // import router from './router'
 
@@ -24,7 +26,7 @@ export default new Vuex.Store({
     },
     actions:{
         register(context){
-            console.log('tes')
+            // console.log('tes')
             axios.post('http://localhost:3000/users/register',{
                 name : this.state.name,
                 email : this.state.email,
@@ -33,7 +35,8 @@ export default new Vuex.Store({
               })
               .then(dataUser=>{
                   if(dataUser.data.errors){
-                      console.log('error')
+                    //   console.log('error')
+                    swal("Register failed!", "please fill in the empty fields", "warning");
                     }else{
                           console.log(dataUser)
 
@@ -43,6 +46,23 @@ export default new Vuex.Store({
               .catch(err=>{
                   console.log(err)
               })
+        },
+        login(context){
+            axios.post('http://localhost:3000/users/login',{
+                email : this.state.email,
+                password : this.state.password
+            })
+            .then(dataUser=>{
+                // console.log(dataUser)
+                if(dataUser.data == false){
+                    swal("Login failed!", "wrong password", "warning");
+                }else{
+                    console.log(dataUser)
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         }
     }
 })

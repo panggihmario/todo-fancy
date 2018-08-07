@@ -30,7 +30,7 @@
                                
                                 <v-flex xs 12>
                                     <div>
-                                   <v-btn outline color="indigo">Login</v-btn>
+                                   <v-btn outline color="indigo" @click="login">Login</v-btn>
                                 </div>
                                 
                                   </v-flex>
@@ -47,16 +47,42 @@
 
 <script>
 import router from '../router'
+import {mapActions,mapState} from 'vuex'
 export default {
   data(){
     return {
-      gradient : 'to right, #076585,#fff'
+      gradient : 'to right, #076585,#fff',
+      errors : []
     }
   },
   methods : {
       moveToRegister(){
           router.push('/')
+      },
+      ...mapActions([
+          "login"
+      ])
+  },
+   computed :{
+    ...mapState([
+      "password","email"
+    ]),
+      inputEmail : {
+      get(){
+        return this.$store.state.email
+      },
+      set(value){
+        this.$store.commit('setEmail',value)
       }
+    },
+      inputPassword : {
+      get(){
+        return this.$store.state.password
+      },
+      set(value){
+        this.$store.commit('setPassword',value)
+      }
+    }
   }
 }
 </script>

@@ -58,9 +58,14 @@ class Controller{
                     // res.json(dataUser)
                     res.json(token)
                 }else{
-                    res.json('wrong password')
+                    res.json(false)
                 }
+            }else{
+                res.json('empty')
             }
+        })
+        .catch(err=>{
+            console.log(err)
         })
     }
 

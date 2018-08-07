@@ -4,7 +4,8 @@ var Schema = mongoose.Schema
 var blogUser = new Schema({
     name:  {
       type : String,
-      required : true
+      required : true,
+      msg : 'tess'
     },
     email : {
       type : String,

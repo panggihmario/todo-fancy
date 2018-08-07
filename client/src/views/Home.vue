@@ -11,7 +11,7 @@
                         <form>
                             <v-layout row>
                             <v-flex xs12>
-                              <v-text-field name ="email" label="name" v-model="inputName" type="name">
+                              <v-text-field name ="name" label="name" v-model="inputName" type="name">
                                 
                               </v-text-field>
                             </v-flex>
@@ -34,7 +34,7 @@
                                
                                 <v-flex xs 12>
                                     <div>
-                                   <v-btn outline color="indigo">Register</v-btn>
+                                   <v-btn outline color="indigo" @click="register">Register</v-btn>
                                 </div>
                                 
                                   </v-flex>
@@ -51,6 +51,7 @@
 
 <script>
 import router from '../router'
+import {mapActions,mapState} from 'vuex'
 export default {
   data(){
     return {
@@ -60,6 +61,38 @@ export default {
   methods : {
     moveToLogin(){
       router.push('/login')
+    },
+    ...mapActions([
+      "register"
+    ])
+  },
+  computed :{
+    ...mapState([
+      "name","password","email"
+    ]),
+    inputName : {
+      get(){
+        return this.$store.state.name
+      },
+      set(value){
+        this.$store.commit('setName',value)
+      }
+    },
+      inputEmail : {
+      get(){
+        return this.$store.state.email
+      },
+      set(value){
+        this.$store.commit('setEmail',value)
+      }
+    },
+      inputPassword : {
+      get(){
+        return this.$store.state.password
+      },
+      set(value){
+        this.$store.commit('setPassword',value)
+      }
     }
   }
 }

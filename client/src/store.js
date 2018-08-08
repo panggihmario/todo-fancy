@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import swal from 'sweetalert';
+import router from './router'
 
 const axios = require('axios');
 // import router from './router'
@@ -13,7 +14,9 @@ export default new Vuex.Store({
         email :'',
         password :'',
         dialog : false,
-        dialogEdit : false
+        dialogEdit : false,
+        task : '',
+        duedate : ''
     },
     mutations :{
         setDialogEdit(state,payload){
@@ -30,6 +33,12 @@ export default new Vuex.Store({
         },
         setPassword(state,payload){
             state.password = payload
+        },
+        setTask(state,payload){
+            state.task = payload
+        },
+        setDueDate(state,payload){
+            state.duedate = payload
         }
     },
     actions:{
@@ -46,7 +55,9 @@ export default new Vuex.Store({
                     //   console.log('error')
                     swal("Register failed!", "please fill in the empty fields", "warning");
                     }else{
-                          console.log(dataUser)
+                        localStorage.setItem('token',dataUser.data.token)
+                        router.push('/about')
+                        console.log(dataUser)
 
                   }
                 //   console.log(dataUser.data.÷errors)
@@ -65,6 +76,8 @@ export default new Vuex.Store({
                 if(dataUser.data == false){
                     swal("Login failed!", "wrong password", "warning");
                 }else{
+                    localStorage.setItem('token',dataUser.data.token)
+                    router.push('/about')
                     console.log(dataUser)
                 }
             })
@@ -77,8 +90,25 @@ export default new Vuex.Store({
         },
         openModalEdit({commit}){
             commit('setDialogEdit',true)
+        },
+        addTask(context){
+            var token = localStorage.getItem('token')
+            console.log(token)
+            console.log(this.state.task)
+            axios.post('http://localhost:3000/task',{
+                task : this.state.task,
+                duedate : this.state.duedate
+            },{
+                headers : {
+                    token : token
+                }
+            })
+            .then((data)=>{
+                console.log(data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         }
     }
 })
-
-

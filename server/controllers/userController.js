@@ -56,7 +56,7 @@ class Controller{
                 var token = jwt.sign({id:dataUser._id,name:dataUser.name,email:dataUser.email},process.env.secretKey)
                 if(checkPassword){
                     // res.json(dataUser)
-                    res.json(token)
+                    res.json({dataUser,token})
                 }else{
                     res.json(false)
                 }

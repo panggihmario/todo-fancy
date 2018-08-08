@@ -16,9 +16,14 @@ export default new Vuex.Store({
         dialog : false,
         dialogEdit : false,
         task : '',
-        duedate : ''
+        duedate : '',
+        alltasks : []
     },
     mutations :{
+        setTasks(state,payload){
+            console.log(payload)
+            state.alltasks = payload
+        },
         setDialogEdit(state,payload){
             state.dialogEdit = payload
         },
@@ -105,9 +110,22 @@ export default new Vuex.Store({
             })
             .then((data)=>{
                 console.log(data)
+                context.dispatch('allTask')
             })
             .catch(err=>{
                 console.log(err)
+            })
+        },
+        allTask({commit}){
+            var token = localStorage.getItem('token')
+            axios('http://localhost:3000/alltask',{
+                headers : {
+                    token : token
+                }
+            })
+            .then(({data})=>{
+                console.log(data)
+                commit('setTasks', data)
             })
         }
     }

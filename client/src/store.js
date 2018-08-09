@@ -17,7 +17,8 @@ export default new Vuex.Store({
         dialogEdit : false,
         task : '',
         duedate : '',
-        alltasks : []
+        alltasks : [],
+        editTodo: ''
     },
     mutations :{
         setTasks(state,payload){
@@ -44,6 +45,9 @@ export default new Vuex.Store({
         },
         setDueDate(state,payload){
             state.duedate = payload
+        },
+        setEditTodo(state, payload){
+            state.editTodo = payload
         }
     },
     actions:{
@@ -93,7 +97,10 @@ export default new Vuex.Store({
         openModal({commit}){
             commit('setDialog',true)
         },
-        openModalEdit({commit}){
+        openModalEdit({commit},data){
+            commit('setEditTodo', data)
+            commit('setDueDate',data.duedate)
+            commit('setTask',data.task)
             commit('setDialogEdit',true)
         },
         addTask(context){
@@ -126,6 +133,34 @@ export default new Vuex.Store({
             .then(({data})=>{
                 console.log(data)
                 commit('setTasks', data)
+            })
+        },
+        deleteTask(context,id){
+            console.log(id)
+            axios.delete(`http://localhost:3000/delete/${id}`,{
+                _id : id
+            })
+            .then(data=>{
+                // console.log(data)
+                context.dispatch('allTask')
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+            
+        },
+        editTask(context,id){
+            // console.log(id)
+            axios.put(`http://localhost:3000/edit/${id}`,{
+                task : this.state.task,
+                duedate : this.state.duedate
+            })
+            .then(data=>{
+                context.dispatch('allTask')
+            })
+            .catch(err=>{
+                console.log(err);
+                
             })
         }
     }

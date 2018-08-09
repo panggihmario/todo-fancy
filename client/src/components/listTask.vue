@@ -16,8 +16,8 @@
                         <td>{{task.createdAt}}</td>
                         <td>{{task.duedate}}</td>
                         <td>
-                            <a href="#" @click="openModalEdit" class="black--text"><i class="fas fa-edit"></i></a> || 
-                            <a href="#" class="black--text"> 
+                            <a href="#" @click="openModalEdit(task)" class="black--text"><i class="fas fa-edit"></i></a> || 
+                            <a href="#" class="black--text" @click="deleteTask(task._id)"> 
 
                             <i class="far fa-trash-alt"></i>
                             </a>
@@ -48,11 +48,10 @@ export default {
     },
     methods : {
         ...mapActions([
-            "openModalEdit","allTask"
+            "openModalEdit","allTask","deleteTask",
         ])
   
     },
-    
     computed : {
         ...mapState([
             "alltasks"

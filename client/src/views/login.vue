@@ -33,6 +33,9 @@
                                    <v-btn outline color="indigo" @click="login">Login</v-btn>
                                 </div>
                                 
+                                <div>
+                                  <button type="submit" @click="loginFb">loginfb</button>
+                                </div>
                                   </v-flex>
                                 </v-layout>      
                         </form>
@@ -60,7 +63,7 @@ export default {
           router.push('/')
       },
       ...mapActions([
-          "login"
+          "login","loginFb"
       ])
   },
    computed :{

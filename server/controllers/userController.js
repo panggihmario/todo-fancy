@@ -70,13 +70,14 @@ class Controller{
     }
 
     static getDataFb(req,res){
-        let tokenfb = req.headers.tokenfb
-        // FB.setAccessToken(tokenfb)
+        console.log(req.body.data.tokenFb)
+        let tokenfb = req.body.data.tokenFb
+        FB.setAccessToken(tokenfb)
         FB.api('me',{
             fields : ['id','name','email'],access_token : tokenfb
         },function(response){
             // res.json(response)
-            // console.log(response)
+            console.log(response)
             user.findOne({
                 email : response.email
             })

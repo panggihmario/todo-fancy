@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import swal from 'sweetalert';
 import router from './router'
+import {provider,auth} from '@/firebase.js'
 
 const axios = require('axios');
 // import router from './router'
@@ -141,7 +142,6 @@ export default new Vuex.Store({
                 _id : id
             })
             .then(data=>{
-                // console.log(data)
                 context.dispatch('allTask')
             })
             .catch(err=>{
@@ -159,9 +159,32 @@ export default new Vuex.Store({
                 context.dispatch('allTask')
             })
             .catch(err=>{
-                console.log(err);
-                
+                console.log(err)      
+            })
+        },
+        logout(context){
+            localStorage.clear()
+            auth.signInWithPopup(provider)
+            .then(result=>{
+            })
+        },
+        loginFb(context){
+            auth.signInWithPopup(provider)
+            .then(function(result) {
+                // console.log(result.credential.accessToken)
+                axios.post('http://localhost:3000/users/loginfb',{
+                    data : {
+                        tokenFb : result.credential.accessToken
+                    }
+                })
+                .then(data=>{
+                    let token = data.data.token
+                    localStorage.setItem('token',token)
+                    router.push('/about')
+                    console.log(data)
+                })
             })
         }
+
     }
 })

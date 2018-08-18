@@ -5,14 +5,20 @@ Vue.component('list-task',{
       <tr>
         <th scope="col">Task</th>
         <th scope="col">Due Date</th>
-        <th scope="col">Action</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr  v-for="task in tasks">
         <td>{{task.task}}</td>
         <td>{{task.duedate}}</td>
-        <td></td>
+        <td>
+        <i class="fas fa-edit"></i>
+        </td>
+        <td>
+        <i class="fas fa-trash-alt"></i>
+        </td>
       </tr>
     
      

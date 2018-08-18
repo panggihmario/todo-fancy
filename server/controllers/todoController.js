@@ -5,42 +5,23 @@ const jwt = require('jsonwebtoken')
 class Controller{
     static addTask(req,res){
         var decoded = jwt.verify(req.headers.token, process.env.secretKey)
-<<<<<<< HEAD
-=======
-        // console.log(decoded)
->>>>>>> 66acf1aa09902177cf7c40ec90dfcb698a421467
         todo.create({
             task : req.body.task,
             user: decoded.id,
             duedate : req.body.duedate
         })
         .then(function(data){
-<<<<<<< HEAD
-=======
-            console.log('success')
-            // console.log(data)
->>>>>>> 66acf1aa09902177cf7c40ec90dfcb698a421467
             res.json(data)
         })
         .catch(err=>{
             res.json(err)
         })
-<<<<<<< HEAD
     }
 
     static allTask(req,res){
         
         var decoded = jwt.verify(req.headers.token, process.env.secretKey)
         
-=======
-       
-    }
-
-    static allTask(req,res){
-        // console.log("masuk dong",req.headers)
-        var decoded = jwt.verify(req.headers.token, process.env.secretKey)
-        console.log("===================",decoded)
->>>>>>> 66acf1aa09902177cf7c40ec90dfcb698a421467
         todo.find({
             user: decoded.id
         })

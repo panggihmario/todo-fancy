@@ -15,6 +15,7 @@ var blogUser = new Schema({
       type : String,
       required : true
     },
+    tasks : []
   });
 
 var user = mongoose.model('User',blogUser)

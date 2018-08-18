@@ -10,25 +10,21 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field label="Task" required></v-text-field>
+                  <v-text-field label="Task" required v-model="inputTask"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                    <div>
-      <v-layout row wrap>
-        <v-flex xs12 sm3>
-          <v-checkbox v-model="landscape" hide-details label="Landscape"></v-checkbox>
-        </v-flex>
-        <v-flex xs12 sm3>
-          <v-checkbox v-model="reactive" hide-details label="Reactive"></v-checkbox>
-        </v-flex>
-      </v-layout>
-  
-      <v-date-picker v-model="picker" :landscape="landscape" :reactive="reactive"></v-date-picker>
-    </div>
-                  
+                    <v-layout row wrap>
+                      <v-flex xs12 sm3>
+                        <v-checkbox v-model="landscape" hide-details label="Landscape"></v-checkbox>
+                      </v-flex>
+                      <v-flex xs12 sm3>
+                        <v-checkbox v-model="reactive" hide-details label="Reactive"></v-checkbox>
+                      </v-flex>
+                    </v-layout>
+                  <v-date-picker v-model="inputDueDate" :landscape="landscape" :reactive="reactive"></v-date-picker>
+                </div>
                 </v-flex>
-              
-              
               </v-layout>
             </v-container>
             <small>*indicates required field</small>
@@ -36,17 +32,46 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="addTask"     @click.native="dialog = false">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-layout>
 </template>
-
 <script>
 import {mapActions,mapState} from 'vuex'
 export default {
-    computed :{
+    data(){
+        return {
+        landscape: false,
+        reactive: false
+        }
+    },
+    methods : {
+      ...mapActions([
+        "addTask"
+      ])
+    },
+    computed : {
+      ...mapState([
+        "task" ,"duedate"
+      ]),
+       inputTask : {
+      get(){
+        return this.$store.state.task
+      },
+      set(value){
+        this.$store.commit('setTask',value)
+      }
+    },
+     inputDueDate : {
+      get(){
+        return this.$store.state.duedate
+      },
+      set(value){
+        this.$store.commit('setDueDate',value)
+      }
+    },
         dialog :{
             get(){
                 return this.$store.state.dialog
@@ -54,13 +79,6 @@ export default {
             set(value){
                 this.$store.commit('setDialog',false)
             }
-        }
-    },
-    data(){
-        return {
-        picker: null,
-        landscape: false,
-        reactive: false
         }
     }
 }

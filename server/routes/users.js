@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/register',userCon.register)
 router.post('/login',userCon.login)
-router.get('/loginFb',userCon.getDataFb)
+router.post('/loginfb',userCon.getDataFb)
 
 
 

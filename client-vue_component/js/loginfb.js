@@ -2,10 +2,23 @@ function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
     if (response.status === 'connected') {
-      // Logged into your app and Facebook.
+      axios.post('http://localhost:3000/users/loginfb',{
+        headers : {
+          tokenFb : response.authResponse.accessToken
+        }
+      })
+      .then(data=>{
+          console.log(data)
+          let token = data.data.token
+          let name = data.data.name
+          localStorage.setItem('name',name)
+          localStorage.setItem('token',token)
+          window.location = "http://localhost:8080/home.html"
+      })
+
+
       testAPI();
     } else {
-      // The person is not logged into your app or we are unable to tell.
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
     }
@@ -26,7 +39,7 @@ function statusChangeCallback(response) {
       version    : 'v2.8' // use graph api version 2.8
     });
     FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
+      // statusChangeCallback(response);
     });
   };
   (function(d, s, id) {
@@ -37,13 +50,19 @@ function statusChangeCallback(response) {
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
+
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-    //   document.getElementById('status').innerHTML =
-    //     'Thanks for logging in, ' + response.name + '!';
+
     });
   }
+
+  function logout(){
+    localStorage.clear()
+    FB.logout(function(response){
+        statusChangeCallback(response);
+    })
+    window.location="http://localhost:8080/"
+}

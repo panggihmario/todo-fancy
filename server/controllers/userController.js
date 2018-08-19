@@ -2,6 +2,7 @@ const user = require('../models/user.js')
 var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const saltRounds = 10;
+const axios = require('axios');
 var FB = require('fb');
 
 class Controller{
@@ -73,47 +74,42 @@ class Controller{
     }
 
     static getDataFb(req,res){
-        console.log(req.body.data.tokenFb)
-        let tokenfb = req.body.data.tokenFb
-        FB.setAccessToken(tokenfb)
-        FB.api('me',{
-            fields : ['id','name','email'],access_token : tokenfb
-        },function(response){
-            // res.json(response)
-            console.log(response)
+        let tokenfb = req.body.headers.tokenFb
+        let url = `https://graph.facebook.com/me?fields=id,name,email&access_token=${tokenfb}`
+        axios.get(url)
+        .then(response=>{
             user.findOne({
-                email : response.email
+                email : response.data.email
             })
             .then(function(dataFb){
+                console.log(dataFb);
+                
                 if(dataFb){
-                    // console.log(dataFb)
                     var token = jwt.sign({id:dataFb._id,name:dataFb.name,email:dataFb.email},process.env.secretKey)
-                    res.status(200).json({token,email :dataFb.email})
+                    res.status(200).json({token,email :dataFb.email,name:dataFb.name})
                 }else{
-                   
                     user.create({
-                        name : response.name,
-                        email : response.email,
-                        password : response.id
+                        name : response.data.name,
+                        email : response.data.email,
+                        password : response.data.id
                     })
-                    .then(function(data){
+                    .then(data=>{
                         var token = jwt.sign({id:data._id,name:data.name,email:data.email},process.env.secretKey)
                         res.status(200).json({
                             data,token
                         })
-                        console.log(token)
                     })
-                    .catch((err)=>{
-                        console.log(err)
+                    .catch(err=>{
                         res.status(500).json({ error: err})
                     })
                 }
             })
             .catch(err=>{
-                console.log(err)
                 res.status(500).json({ error: err})
             })
+            
         })
+        
     }
 }
 

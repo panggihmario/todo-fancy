@@ -8,7 +8,7 @@ Vue.component('navbars',{
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#"> <i class="fas fa-user"></i> {{name}} <span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -17,11 +17,25 @@ Vue.component('navbars',{
         <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Add Task <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-        <a class="nav-link" href="#">Log Out</a>
+        <a class="nav-link" href="#" onclick="logout()">Log Out</a>
         </li>
     </ul>
         </form>
         </div>
     </nav>
-    `
+    `,
+    data(){
+        return{
+            name :''
+        }
+    },
+    methods : {
+        getName(){
+            let name =localStorage.getItem('name')
+            this.name = name
+         }
+    },
+    mounted(){
+        this.getName()
+    }
 })

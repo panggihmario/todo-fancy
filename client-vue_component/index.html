@@ -65,5 +65,12 @@
 
     <script src="./js/loginfb.js"></script>
     <script src="./js/user.js"></script>
+    <script>
+        let token = localStorage.getItem('token')
+        if(token){
+            window.location ="http://localhost:8080/home.html"
+        }
+    
+    </script>
     </body>
 </html>

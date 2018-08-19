@@ -15,7 +15,7 @@ new Vue({
             .then(dataUser=>{
                 localStorage.setItem('token',dataUser.data.token)
                 localStorage.setItem('name',dataUser.data.dataUser.name)
-                console.log(dataUser)
+                window.location = "http://localhost:8080/home.html"
             })
             .catch(err=>{
                 console.log(err);
@@ -30,7 +30,7 @@ new Vue({
             .then(dataUser=>{
                 localStorage.setItem('token',dataUser.data.token)
                 localStorage.setItem('name',dataUser.data.dataUser.name)
-                console.log(dataUser);
+                window.location = "http://localhost:8080/home.html"
                 
             })
             .catch(err=>{

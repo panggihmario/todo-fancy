@@ -53,7 +53,6 @@ export default new Vuex.Store({
     },
     actions:{
         register(context){
-            // console.log('tes')
             axios.post('http://localhost:3000/users/register',{
                 name : this.state.name,
                 email : this.state.email,
@@ -62,15 +61,12 @@ export default new Vuex.Store({
               })
               .then(dataUser=>{
                   if(dataUser.data.errors){
-                    //   console.log('error')
                     swal("Register failed!", "please fill in the empty fields", "warning");
                     }else{
                         localStorage.setItem('token',dataUser.data.token)
+                        localStorage.setItem('name',dataUser.data.dataUser.name)
                         router.push('/about')
-                        console.log(dataUser)
-
                   }
-                //   console.log(dataUser.data.÷errors)
               })
               .catch(err=>{
                   console.log(err)
@@ -82,13 +78,14 @@ export default new Vuex.Store({
                 password : this.state.password
             })
             .then(dataUser=>{
-                // console.log(dataUser)
                 if(dataUser.data == false){
                     swal("Login failed!", "wrong password", "warning");
                 }else{
+                    console.log(dataUser);
+                    
                     localStorage.setItem('token',dataUser.data.token)
+                    localStorage.setItem('name',dataUser.data.dataUser.name)
                     router.push('/about')
-                    console.log(dataUser)
                 }
             })
             .catch(err=>{
@@ -106,8 +103,6 @@ export default new Vuex.Store({
         },
         addTask(context){
             var token = localStorage.getItem('token')
-            console.log(token)
-            console.log(this.state.task)
             axios.post('http://localhost:3000/task/addTask',{
                 task : this.state.task,
                 duedate : this.state.duedate
@@ -117,7 +112,6 @@ export default new Vuex.Store({
                 }
             })
             .then((data)=>{
-                console.log(data)
                 context.dispatch('allTask')
             })
             .catch(err=>{
@@ -170,24 +164,28 @@ export default new Vuex.Store({
         },
         logout(context){
             localStorage.clear()
-            auth.signInWithPopup(provider)
+            router.push('/login')
+            auth.signOut()
             .then(result=>{
+                
             })
         },
         loginFb(context){
             auth.signInWithPopup(provider)
             .then(function(result) {
-                // console.log(result.credential.accessToken)
+                console.log(result.credential.accessToken)
                 axios.post('http://localhost:3000/users/loginfb',{
-                    data : {
+                    headers : {
                         tokenFb : result.credential.accessToken
                     }
                 })
                 .then(data=>{
-                    let token = data.data.token
-                    localStorage.setItem('token',token)
-                    router.push('/about')
                     console.log(data)
+                    let token = data.data.token
+                    let name = data.data.name
+                    localStorage.setItem('token',token)
+                    localStorage.setItem('name',name)
+                    router.push('/about')
                 })
             })
         }

@@ -41,6 +41,7 @@ Vue.component('modal',{
             })
             .then(data=>{
                 console.log(data)
+                window.location="http://localhost:8080/home.html"
             })
             .catch(err=>{
                 console.log(err);

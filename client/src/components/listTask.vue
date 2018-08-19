@@ -59,13 +59,11 @@ export default {
         taskAll :{
                 get(){
                     return this.$store.state.alltasks
-                },
-                
+                },  
                 set(value){
                     this.$store.commit('setTasks',value)
                 }
             },
-
     },
     created(){
         this.allTask()

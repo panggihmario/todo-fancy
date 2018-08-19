@@ -1,7 +1,6 @@
 <template>
      <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent max-width="500px">
-       
         <v-card>
           <v-card-title>
             <span class="headline">Add Task</span>
@@ -17,9 +16,6 @@
                     <v-layout row wrap>
                       <v-flex xs12 sm3>
                         <v-checkbox v-model="landscape" hide-details label="Landscape"></v-checkbox>
-                      </v-flex>
-                      <v-flex xs12 sm3>
-                        <v-checkbox v-model="reactive" hide-details label="Reactive"></v-checkbox>
                       </v-flex>
                     </v-layout>
                   <v-date-picker v-model="inputDueDate" :landscape="landscape" :reactive="reactive"></v-date-picker>

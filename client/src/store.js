@@ -108,7 +108,7 @@ export default new Vuex.Store({
             var token = localStorage.getItem('token')
             console.log(token)
             console.log(this.state.task)
-            axios.post('http://localhost:3000/task',{
+            axios.post('http://localhost:3000/task/addTask',{
                 task : this.state.task,
                 duedate : this.state.duedate
             },{
@@ -126,7 +126,7 @@ export default new Vuex.Store({
         },
         allTask({commit}){
             var token = localStorage.getItem('token')
-            axios('http://localhost:3000/alltask',{
+            axios('http://localhost:3000/task/alltask',{
                 headers : {
                     token : token
                 }
@@ -137,9 +137,11 @@ export default new Vuex.Store({
             })
         },
         deleteTask(context,id){
-            console.log(id)
-            axios.delete(`http://localhost:3000/delete/${id}`,{
-                _id : id
+            var token = localStorage.getItem('token')
+            axios.delete(`http://localhost:3000/task/delete/${id}`,{
+                headers : {
+                    token : token
+                }
             })
             .then(data=>{
                 context.dispatch('allTask')
@@ -150,10 +152,14 @@ export default new Vuex.Store({
             
         },
         editTask(context,id){
-            // console.log(id)
-            axios.put(`http://localhost:3000/edit/${id}`,{
+            var token = localStorage.getItem('token')
+            axios.put(`http://localhost:3000/task/edit/${id}`,{
                 task : this.state.task,
                 duedate : this.state.duedate
+            },{
+                headers : {
+                    token : token
+                }
             })
             .then(data=>{
                 context.dispatch('allTask')
